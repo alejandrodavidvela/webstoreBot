@@ -1,35 +1,34 @@
-//  ================
-// || Webstore Bot ||
-//  ================
-//
-// Description:
-// 
-// Webstore bot captures screenshots of all the standard sitemap stickershop webpages in a easy to review PDF. 
-// Webstore bot helps me quickly scan the whole site in the 3 most popular views. (Full, iPad, iPhone)
-// 
-// 
-// How to Use:
-// 
-// Setup:
-// 
-// 1. Make sure store is running on localhost:3000 with stencil start
-// 2. Open New Terminal and navigate to ./webstoreBot/ Directory
+//                     ================
+//                    || Webstore Bot ||
+//                     ================
 //
 //
-// How to Run Webstore Bot:
-// 
-// 4. npm start .\webstoreBot.js    (Captures screenshots and saves them as .pngs in media folder)
-// 5. node .\createPdf.js           (Create PDFs from pngs with page name labels and saves in media folder) 
-// 
-// New PDFs are saved in './webstoreBot/media/PDF
-// 
 //
-// How to Quickly Clear All Pdfs and Images from media folder:
-//
-// 6. node .\clearDirectory.js
 //
 
+
 const puppeteer = require('puppeteer');
+const fs = require('fs');
+
+// Media directory Paths
+const dir1 = './media'
+const dir2 = './media/img'
+const dir3 = './media/PDF'
+const dir4 = './media/img/Full'
+const dir5 = './media/img/Mobile'
+const dir6 = './media/img/iPad'
+
+// If Media dirextory paths dont exist create them
+if (!fs.existsSync(dir1)) {
+  fs.mkdirSync(dir1);
+  fs.mkdirSync(dir2);
+  fs.mkdirSync(dir3);
+  fs.mkdirSync(dir4);
+  fs.mkdirSync(dir5);
+  fs.mkdirSync(dir6);
+}
+
+// Bot 
 
 describe ("Webstore Screenshot Bot", (done) =>{
     let browser
