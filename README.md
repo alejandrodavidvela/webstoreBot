@@ -29,17 +29,14 @@ npm i
 
 ## How to Run Webstore Bot:
 
-Capture screenshots and save them as .pngs in media folder
+Run the following command
 
 ```sh
 npm start .\webstoreBot.js
 ```
 
-Create PDFs from pngs with page name labels and saves in media folder
+Webstore Bot will take screenshots of all pages and create 3 PDFs in a Full, iPhone, and iPad view. It will also save all the individual images in the ./media/img folder. 
 
-```sh
-node .\createPdf.js
-```
 
 New PDFs are saved in './webstoreBot/media/PDF
 
