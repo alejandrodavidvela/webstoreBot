@@ -13,6 +13,10 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
 
+// Local Host
+const host = 'http://localhost:3000/';
+
+
 // PDF Document, image, and text positition values
 const scale = 0.30;
 const margin = 100;
@@ -124,13 +128,13 @@ describe ("Webstore Screenshot Bot", (done) =>{
     const height = 1050;
   
     it("Accessibility Check", async ()=>{
-      await page.goto('http://localhost:3000/', {waitUntil: 'load'})
+      await page.goto(`${host}`, {waitUntil: 'load'})
       await page.setViewport({width:width, height:height})
       const snapshot = await page.accessibility.snapshot();
       //console.info(snapshot);
     })
     it("Sub Menu Check", async ()=>{
-      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      await page.goto(`${host}`, {waitUntil: 'load'});
       await page.setViewport({width:width, height:height})
       await page.click('a.navPages-action', {waitUntil: 'load'})
       await delay(2000);
@@ -143,79 +147,79 @@ describe ("Webstore Screenshot Bot", (done) =>{
     
     
     it("(Laptop) Home, Apparel, Hats", async ()=>{
-        await page.goto('http://localhost:3000/', {waitUntil: 'load'})
+        await page.goto(`${host}`, {waitUntil: 'load'})
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/home.png', fullPage: true});
-        await page.goto('http://localhost:3000/apparel/')
+        await page.goto(`${host}apparel/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/apparel.png', fullPage: true});
-        await page.goto('http://localhost:3000/hats/')
+        await page.goto(`${host}hats/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/hats.png', fullPage: true});
       })
       it("(Laptop) Tees, Goods, Buttons", async ()=>{
-        await page.goto('http://localhost:3000/tees/')
+        await page.goto(`${host}tees/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/tees.png', fullPage: true});
-        await page.goto('http://localhost:3000/goods/')
+        await page.goto(`${host}goods/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/goods.png', fullPage: true});
-        await page.goto('http://localhost:3000/buttons/')
+        await page.goto(`${host}buttons/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/buttons.png', fullPage: true});
       })
       it("(Laptop) Mugs, Stickers, YardSigns", async ()=>{
-        await page.goto('http://localhost:3000/mugs/')
+        await page.goto(`${host}mugs/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/mugs.png', fullPage: true});
-        await page.goto('http://localhost:3000/stickers/')
+        await page.goto(`${host}stickers/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/stickers.png', fullPage: true});
-        await page.goto('http://localhost:3000/yard-signs/')
+        await page.goto(`${host}yard-signs/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/yardsigns.png', fullPage: true});
       })
       it("(Laptop) About Us, FAQ, Shipping Returns", async ()=>{
-        await page.goto('http://localhost:3000/about-us/')
+        await page.goto(`${host}about-us/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/aboutus.png', fullPage: true});
-        await page.goto('http://localhost:3000/faq/')
+        await page.goto(`${host}faq/`)
         // TODO : screenshot cuts off bottom of the page
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/faq.png', fullPage: true});
-        await page.goto('http://localhost:3000/shipping-returns/')
+        await page.goto(`${host}shipping-returns/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/shippingreturns.png', fullPage: true});
       })
       it("(Laptop) Contact Us, Login, Create Account", async ()=>{
-        await page.goto('http://localhost:3000/contact-us/')
+        await page.goto(`${host}contact-us/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/contactus.png', fullPage: true});
-        await page.goto('http://localhost:3000/login.php')
+        await page.goto(`${host}login.php`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/login.png', fullPage: true});
         // TODO : add action to click on the create account button and then take screenshot
-        await page.goto('http://localhost:3000/login.php?action=create_account/')
+        await page.goto(`${host}login.php?action=create_account/`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/createaccount.png', fullPage: true});
       })
       it("(Laptop) Sample Tee, Site Map, Cart", async ()=>{
-        await page.goto('http://localhost:3000/sample-unisex-tee-navy/')
+        await page.goto(`${host}sample-unisex-tee-navy/`)
         await page.setViewport({width:width, height:height})
         await delay(2000);
         await page.screenshot({path: './media/img/Full/teedetail.png', fullPage: true});
         await page.click('input.button--primary', {waitUntil: 'load'})
         await delay(4000);
         await page.screenshot({path: './media/img/Full/addtocart.png', fullPage: true});
-        await page.goto('http://localhost:3000/sitemap.php')
+        await page.goto(`${host}sitemap.php`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/sitemap.png', fullPage: true});
-        await page.goto('http://localhost:3000/cart.php')
+        await page.goto(`${host}cart.php`)
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/cart.png', fullPage: true});
       })
       it("(Laptop) Checkout", async ()=>{
-        await page.goto('http://localhost:3000/checkout')
+        await page.goto(`${host}checkout`)
         await page.setViewport({width:width, height:height})
         await delay(4000);
         await page.screenshot({path: './media/img/Full/checkout.png', fullPage: true});
@@ -225,7 +229,7 @@ describe ("Webstore Screenshot Bot", (done) =>{
     //  width: 320
     //  height: 568
     it("Mobile Menu Open", async ()=>{
-      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      await page.goto(`${host}`, {waitUntil: 'load'});
       const mobile = puppeteer.devices['iPhone 5']
       await page.emulate(mobile)
       await page.click('a.mobileMenu-toggle', {waitUntil: 'load'})
@@ -233,7 +237,7 @@ describe ("Webstore Screenshot Bot", (done) =>{
       await page.screenshot({path: './media/img/Mobile/mobileMenu.png', fullPage: true});
     })
     it("Sub Menu Expanded Check", async ()=>{
-      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      await page.goto(`${host}`, {waitUntil: 'load'});
       const mobile = puppeteer.devices['iPhone 5']
       await page.emulate(mobile)
       await page.click('a.mobileMenu-toggle', {waitUntil: 'load'})
@@ -246,67 +250,67 @@ describe ("Webstore Screenshot Bot", (done) =>{
     })
 
       it("(iPhone 5) Home, Apparel, Hats", async ()=>{
-        await page.goto('http://localhost:3000/')
+        await page.goto(`${host}`)
         const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/home.png', fullPage: true});
-        await page.goto('http://localhost:3000/apparel/')
+        await page.goto(`${host}apparel/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/apparel.png', fullPage: true});
-        await page.goto('http://localhost:3000/hats/')
+        await page.goto(`${host}hats/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/hats.png', fullPage: true});
       })
       it("(iPhone 5) Tees, Goods, Buttons", async ()=>{
-        await page.goto('http://localhost:3000/tees/')
+        await page.goto(`${host}tees/`)
         const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/tees.png', fullPage: true});
-        await page.goto('http://localhost:3000/goods/')
+        await page.goto(`${host}goods/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/goods.png', fullPage: true});
-        await page.goto('http://localhost:3000/buttons/')
+        await page.goto(`${host}buttons/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/buttons.png', fullPage: true});
       })
       it("(iPhone 5) Mugs, Stickers, YardSigns", async ()=>{
-        await page.goto('http://localhost:3000/mugs/')
+        await page.goto(`${host}mugs/`)
         const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/mugs.png', fullPage: true});
-        await page.goto('http://localhost:3000/stickers/')
+        await page.goto(`${host}stickers/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/stickers.png', fullPage: true});
-        await page.goto('http://localhost:3000/yard-signs/')
+        await page.goto(`${host}yard-signs/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/yardsigns.png', fullPage: true});
       })
       it("(iPhone 5) About Us, FAQ, Shipping Returns", async ()=>{
-        await page.goto('http://localhost:3000/about-us/')
+        await page.goto(`${host}about-us/`)
         const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/aboutus.png', fullPage: true});
-        await page.goto('http://localhost:3000/faq/')
+        await page.goto(`${host}faq/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/faq.png', fullPage: true});
-        await page.goto('http://localhost:3000/shipping-returns/')
+        await page.goto(`${host}shipping-returns/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/shippingreturns.png', fullPage: true});
       })
       it("(iPhone 5) Contact Us, Login, Create Account", async ()=>{
-        await page.goto('http://localhost:3000/contact-us/')
+        await page.goto(`${host}contact-us/`)
         const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/contactus.png', fullPage: true});
-        await page.goto('http://localhost:3000/login.php')
+        await page.goto(`${host}login.php`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/login.png', fullPage: true});
-        await page.goto('http://localhost:3000/login.php?action=create_account/')
+        await page.goto(`${host}login.php?action=create_account/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/createaccount.png', fullPage: true});
       })
       it("(iPhone 5) Sample Tee, Site Map, Cart", async ()=>{
-        await page.goto('http://localhost:3000/sample-unisex-tee-navy/')
+        await page.goto(`${host}sample-unisex-tee-navy/`)
         const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/teedetail.png', fullPage: true});
@@ -314,15 +318,15 @@ describe ("Webstore Screenshot Bot", (done) =>{
         await delay(4000);
         await page.screenshot({path: './media/img/Mobile/addtocart.png', fullPage: true});
         await delay(2000);
-        await page.goto('http://localhost:3000/sitemap.php')
+        await page.goto(`${host}sitemap.php`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/sitemap.png', fullPage: true});
-        await page.goto('http://localhost:3000/cart.php')
+        await page.goto(`${host}cart.php`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/cart.png', fullPage: true});
       })
       it("(iPhone 5) Checkout", async ()=>{
-        await page.goto('http://localhost:3000/checkout')
+        await page.goto(`${host}checkout`)
         const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
         await delay(4000);
@@ -334,7 +338,7 @@ describe ("Webstore Screenshot Bot", (done) =>{
     //  height: 1024
 
     it("iPad Menu Open", async ()=>{
-      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      await page.goto(`${host}`, {waitUntil: 'load'});
       const mobile = puppeteer.devices['iPad']
       await page.emulate(mobile)
       await page.click('a.mobileMenu-toggle', {waitUntil: 'load'})
@@ -342,7 +346,7 @@ describe ("Webstore Screenshot Bot", (done) =>{
       await page.screenshot({path: './media/img/iPad/mobileMenu.png', fullPage: true});
     })
     it("Sub Menu Expanded Check", async ()=>{
-      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      await page.goto(`${host}`, {waitUntil: 'load'});
       const mobile = puppeteer.devices['iPad']
       await page.emulate(mobile)
       await page.click('a.mobileMenu-toggle', {waitUntil: 'load'})
@@ -354,67 +358,67 @@ describe ("Webstore Screenshot Bot", (done) =>{
       await page.screenshot({path: './media/img/iPad/submenu.png', fullPage: true});
     })
        it("(iPad) Home, Apparel, Hats", async ()=>{
-        await page.goto('http://localhost:3000/')
+        await page.goto(`${host}`)
         const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/home.png', fullPage: true});
-        await page.goto('http://localhost:3000/apparel/')
+        await page.goto(`${host}apparel/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/apparel.png', fullPage: true});
-        await page.goto('http://localhost:3000/hats/')
+        await page.goto(`${host}hats/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/hats.png', fullPage: true});
       })
       it("(iPad) Tees, Goods, Buttons", async ()=>{
-        await page.goto('http://localhost:3000/tees/')
+        await page.goto(`${host}tees/`)
         const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/tees.png', fullPage: true});
-        await page.goto('http://localhost:3000/goods/')
+        await page.goto(`${host}goods/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/goods.png', fullPage: true});
-        await page.goto('http://localhost:3000/buttons/')
+        await page.goto(`${host}buttons/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/buttons.png', fullPage: true});
       })
       it("(iPad) Mugs, Stickers, YardSigns", async ()=>{
-        await page.goto('http://localhost:3000/mugs/')
+        await page.goto(`${host}mugs/`)
         const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/mugs.png', fullPage: true});
-        await page.goto('http://localhost:3000/stickers/')
+        await page.goto(`${host}stickers/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/stickers.png', fullPage: true});
-        await page.goto('http://localhost:3000/yard-signs/')
+        await page.goto(`${host}yard-signs/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/yardsigns.png', fullPage: true});
       })
       it("(iPad) About Us, FAQ, Shipping Returns", async ()=>{
-        await page.goto('http://localhost:3000/about-us/')
+        await page.goto(`${host}about-us/`)
         const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/aboutus.png', fullPage: true});
-        await page.goto('http://localhost:3000/faq/')
+        await page.goto(`${host}faq/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/faq.png', fullPage: true});
-        await page.goto('http://localhost:3000/shipping-returns/')
+        await page.goto(`${host}shipping-returns/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/shippingreturns.png', fullPage: true});
       })
       it("(iPad) Contact Us, Login, Create Account", async ()=>{
-        await page.goto('http://localhost:3000/contact-us/')
+        await page.goto(`${host}contact-us/`)
         const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/contactus.png', fullPage: true});
-        await page.goto('http://localhost:3000/login.php')
+        await page.goto(`${host}login.php`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/login.png', fullPage: true});
-        await page.goto('http://localhost:3000/login.php?action=create_account/')
+        await page.goto(`${host}login.php?action=create_account/`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/createaccount.png', fullPage: true});
       })
       it("(iPad) Sample Tee, Site Map, Cart", async ()=>{
-        await page.goto('http://localhost:3000/sample-unisex-tee-navy/')
+        await page.goto(`${host}sample-unisex-tee-navy/`)
         const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/teedetail.png', fullPage: true});
@@ -422,15 +426,15 @@ describe ("Webstore Screenshot Bot", (done) =>{
         await delay(4000);
         await page.screenshot({path: './media/img/iPad/addtocart.png', fullPage: true});
         await delay(2000);
-        await page.goto('http://localhost:3000/sitemap.php')
+        await page.goto(`${host}sitemap.php`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/sitemap.png', fullPage: true});
-        await page.goto('http://localhost:3000/cart.php')
+        await page.goto(`${host}cart.php`)
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/cart.png', fullPage: true});
       })
       it("(iPad) Checkout", async ()=>{
-        await page.goto('http://localhost:3000/checkout')
+        await page.goto(`${host}checkout`)
         const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
         await delay(4000);
