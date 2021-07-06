@@ -26,6 +26,7 @@ const dir3 = './media/PDF'
 const dir4 = './media/img/Full'
 const dir5 = './media/img/Mobile'
 const dir6 = './media/img/iPad'
+const dir7 = './archive'
 
 // If Media dirextory paths dont exist create them
 if (!fs.existsSync(dir1)) {
@@ -35,11 +36,15 @@ if (!fs.existsSync(dir1)) {
   fs.mkdirSync(dir4);
   fs.mkdirSync(dir5);
   fs.mkdirSync(dir6);
+  fs.mkdirSync(dir7);
 }
 
 // Make list of pages
 const pageList = [
   'home',
+  'submenu',
+  'mobileMenu',
+  'submenuExpanded',
   'apparel',
   'hats',
   'tees',
@@ -55,6 +60,7 @@ const pageList = [
   'login',
   'createaccount',
   'teedetail',
+  'addtocart',
   'sitemap',
   'cart',
   'checkout'
@@ -63,6 +69,9 @@ const pageList = [
 
 // file path variables
 const home = 'home';
+const submenu = 'submenu';
+const mobileMenu = 'mobileMenu';
+const submenuExpanded = 'submenuExpanded';
 const apparel = 'apparel';
 const hats = 'hats';
 const tees = 'tees';
@@ -79,6 +88,7 @@ const login = 'login';
 const createaccount = 'createaccount';
 const teedetail = 'teedetail';
 const sitemap = 'sitemap';
+const addtocart = 'addtocart';
 const cart = 'cart';
 const checkout = 'checkout';
 
@@ -86,6 +96,13 @@ const checkout = 'checkout';
 const path1 = './media/img/Full/';
 const path2 = './media/img/Mobile/';
 const path3 = './media/img/iPad/';
+
+// function for time delay
+function delay(time) {
+  return new Promise(function(resolve) { 
+      setTimeout(resolve, time)
+  });
+}
 
 
 // Bot 
@@ -106,10 +123,27 @@ describe ("Webstore Screenshot Bot", (done) =>{
     const width = 1650;
     const height = 1050;
   
+    it("Accessibility Check", async ()=>{
+      await page.goto('http://localhost:3000/', {waitUntil: 'load'})
+      await page.setViewport({width:width, height:height})
+      const snapshot = await page.accessibility.snapshot();
+      //console.info(snapshot);
+    })
+    it("Sub Menu Check", async ()=>{
+      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      await page.setViewport({width:width, height:height})
+      await page.click('a.navPages-action', {waitUntil: 'load'})
+      await delay(2000);
+      await page.screenshot({path: './media/img/Full/submenu.png', fullPage: true});
+      await delay(2000);
+      await page.screenshot({path: './media/img/Full/mobileMenu.png', fullPage: true});
+      await delay(2000);
+      await page.screenshot({path: './media/img/Full/submenuExpanded.png', fullPage: true});
+    })
     
     
     it("(Laptop) Home, Apparel, Hats", async ()=>{
-        await page.goto('http://localhost:3000/')
+        await page.goto('http://localhost:3000/', {waitUntil: 'load'})
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/home.png', fullPage: true});
         await page.goto('http://localhost:3000/apparel/')
@@ -165,26 +199,51 @@ describe ("Webstore Screenshot Bot", (done) =>{
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/createaccount.png', fullPage: true});
       })
-      it("(Laptop) Sample Tee, Site Map, Cart, Checkout", async ()=>{
+      it("(Laptop) Sample Tee, Site Map, Cart", async ()=>{
         await page.goto('http://localhost:3000/sample-unisex-tee-navy/')
         await page.setViewport({width:width, height:height})
+        await delay(2000);
         await page.screenshot({path: './media/img/Full/teedetail.png', fullPage: true});
+        await page.click('input.button--primary', {waitUntil: 'load'})
+        await delay(4000);
+        await page.screenshot({path: './media/img/Full/addtocart.png', fullPage: true});
         await page.goto('http://localhost:3000/sitemap.php')
         await page.setViewport({width:width, height:height})
         await page.screenshot({path: './media/img/Full/sitemap.png', fullPage: true});
         await page.goto('http://localhost:3000/cart.php')
         await page.setViewport({width:width, height:height})
-        // TODO : add action to add item to cart then go to this page and take a screenshot
         await page.screenshot({path: './media/img/Full/cart.png', fullPage: true});
+      })
+      it("(Laptop) Checkout", async ()=>{
         await page.goto('http://localhost:3000/checkout')
         await page.setViewport({width:width, height:height})
-                // TODO : add action to add item to cart then go to this page and take a screenshot
+        await delay(4000);
         await page.screenshot({path: './media/img/Full/checkout.png', fullPage: true});
       })
 
     //  iPhone 5
     //  width: 320
     //  height: 568
+    it("Mobile Menu Open", async ()=>{
+      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      const mobile = puppeteer.devices['iPhone 5']
+      await page.emulate(mobile)
+      await page.click('a.mobileMenu-toggle', {waitUntil: 'load'})
+      await delay(2000);
+      await page.screenshot({path: './media/img/Mobile/mobileMenu.png', fullPage: true});
+    })
+    it("Sub Menu Expanded Check", async ()=>{
+      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      const mobile = puppeteer.devices['iPhone 5']
+      await page.emulate(mobile)
+      await page.click('a.mobileMenu-toggle', {waitUntil: 'load'})
+      await delay(2000);
+      await page.click('a.navPages-action', {waitUntil: 'load'})
+      await delay(2000);
+      await page.screenshot({path: './media/img/Mobile/submenuExpanded.png', fullPage: true});
+      await delay(2000);
+      await page.screenshot({path: './media/img/Mobile/submenu.png', fullPage: true});
+    })
 
       it("(iPhone 5) Home, Apparel, Hats", async ()=>{
         await page.goto('http://localhost:3000/')
@@ -246,26 +305,54 @@ describe ("Webstore Screenshot Bot", (done) =>{
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/createaccount.png', fullPage: true});
       })
-      it("(iPhone 5) Sample Tee, Site Map, Cart, Checkout", async ()=>{
+      it("(iPhone 5) Sample Tee, Site Map, Cart", async ()=>{
         await page.goto('http://localhost:3000/sample-unisex-tee-navy/')
         const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/teedetail.png', fullPage: true});
+        await page.click('input.button--primary', {waitUntil: 'load'})
+        await delay(4000);
+        await page.screenshot({path: './media/img/Mobile/addtocart.png', fullPage: true});
+        await delay(2000);
         await page.goto('http://localhost:3000/sitemap.php')
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/sitemap.png', fullPage: true});
         await page.goto('http://localhost:3000/cart.php')
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/Mobile/cart.png', fullPage: true});
+      })
+      it("(iPhone 5) Checkout", async ()=>{
         await page.goto('http://localhost:3000/checkout')
+        const mobile = puppeteer.devices['iPhone 5']
         await page.emulate(mobile)
-        await page.screenshot({path: './media/img/Mobile/checkout.png', fullPage: true});
+        await delay(4000);
+        await page.screenshot({path: './media/img/Mobile/checkout.png', fullPage: true, omitBackground: true});
       })
 
     //  iPad
     //  width: 768
     //  height: 1024
 
+    it("iPad Menu Open", async ()=>{
+      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      const mobile = puppeteer.devices['iPad']
+      await page.emulate(mobile)
+      await page.click('a.mobileMenu-toggle', {waitUntil: 'load'})
+      await delay(2000);
+      await page.screenshot({path: './media/img/iPad/mobileMenu.png', fullPage: true});
+    })
+    it("Sub Menu Expanded Check", async ()=>{
+      await page.goto('http://localhost:3000/', {waitUntil: 'load'});
+      const mobile = puppeteer.devices['iPad']
+      await page.emulate(mobile)
+      await page.click('a.mobileMenu-toggle', {waitUntil: 'load'})
+      await delay(2000);
+      await page.click('a.navPages-action', {waitUntil: 'load'})
+      await delay(2000);
+      await page.screenshot({path: './media/img/iPad/submenuExpanded.png', fullPage: true});
+      await delay(2000);
+      await page.screenshot({path: './media/img/iPad/submenu.png', fullPage: true});
+    })
        it("(iPad) Home, Apparel, Hats", async ()=>{
         await page.goto('http://localhost:3000/')
         const mobile = puppeteer.devices['iPad']
@@ -326,20 +413,28 @@ describe ("Webstore Screenshot Bot", (done) =>{
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/createaccount.png', fullPage: true});
       })
-      it("(iPad) Sample Tee, Site Map, Cart, Checkout", async ()=>{
+      it("(iPad) Sample Tee, Site Map, Cart", async ()=>{
         await page.goto('http://localhost:3000/sample-unisex-tee-navy/')
         const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/teedetail.png', fullPage: true});
+        await page.click('input.button--primary', {waitUntil: 'load'})
+        await delay(4000);
+        await page.screenshot({path: './media/img/iPad/addtocart.png', fullPage: true});
+        await delay(2000);
         await page.goto('http://localhost:3000/sitemap.php')
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/sitemap.png', fullPage: true});
         await page.goto('http://localhost:3000/cart.php')
         await page.emulate(mobile)
         await page.screenshot({path: './media/img/iPad/cart.png', fullPage: true});
+      })
+      it("(iPad) Checkout", async ()=>{
         await page.goto('http://localhost:3000/checkout')
+        const mobile = puppeteer.devices['iPad']
         await page.emulate(mobile)
-        await page.screenshot({path: './media/img/iPad/checkout.png', fullPage: true});
+        await delay(4000);
+        await page.screenshot({path: './media/img/iPad/checkout.png', fullPage: true, omitBackground: true});
       })
 
       // Create pdf
