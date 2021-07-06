@@ -1,7 +1,6 @@
 # Webstore Bot
-## Webpage Screenshot saved as PDF for iPhone, iPad, and Laptop
+## Webpage Screenshots Saved as PDFs for iPhone, iPad, and Laptop
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 Webstore bot captures screenshots of all the standard sitemap stickershop webpages in a easy to review PDF. 
  
