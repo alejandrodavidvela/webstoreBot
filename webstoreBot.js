@@ -13,7 +13,7 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
 
-// Local Host
+// Local Host variable
 const host = 'http://localhost:3000/';
 
 
@@ -32,7 +32,7 @@ const dir5 = './media/img/Mobile'
 const dir6 = './media/img/iPad'
 const dir7 = './archive'
 
-// If Media dirextory paths dont exist create them
+// If Media directory paths dont exist create them
 if (!fs.existsSync(dir1)) {
   fs.mkdirSync(dir1);
   fs.mkdirSync(dir2);
